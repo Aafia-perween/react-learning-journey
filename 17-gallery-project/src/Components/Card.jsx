@@ -8,7 +8,6 @@ const Card = ({ elem }) => {
     try {
       await navigator.clipboard.writeText(download_url);
     } catch {
-      // ignore
     }
   };
 
@@ -28,7 +27,7 @@ const Card = ({ elem }) => {
         />
       </div>
 
-      {/* Info strip */}
+      
       <div className="p-3 flex items-center justify-between">
         <div className="min-w-0">
           <p className="text-sm font-semibold truncate">{author}</p>
@@ -63,7 +62,6 @@ const Card = ({ elem }) => {
         </div>
       </div>
 
-      {/* Glow edge on hover */}
       <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition">
         <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-amber-300/60 to-transparent" />
       </div>

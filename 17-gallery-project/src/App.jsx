@@ -28,13 +28,11 @@ const App = () => {
 
   useEffect(() => {
     fetchPage(index);
-    // scroll to top on page change
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [index, fetchPage]);
 
-  // build numbered pagination window like: 1 … 3 4 [5] 6 7 … (infinite forward)
   const pageWindow = useMemo(() => {
-    const around = 2; // how many numbers on each side
+    const around = 2;
     const start = Math.max(1, index - around);
     const end = index + around;
     const arr = [];
@@ -44,13 +42,12 @@ const App = () => {
 
   const goTo = (p) => {
     if (p < 1) return;
-    setUserData([]); // clears to show shimmer loaders
+    setUserData([]); 
     setIndex(p);
   };
 
   return (
     <div className="min-h-screen text-white bg-gradient-to-br from-[#0b0b0f] via-[#141826] to-[#1b0f2e]">
-      {/* Sticky neon header */}
       <header className="sticky top-0 z-30 backdrop-blur-md bg-white/5 border-b border-white/10">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
@@ -70,21 +67,21 @@ const App = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-3 sm:px-4 pt-6 pb-28">
-        {/* Error toast */}
+      
         {err && (
           <div className="mb-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm">
             {err}
           </div>
         )}
 
-        {/* Grid */}
+
         <div
           className="
             grid gap-4 sm:gap-5
             grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
           "
         >
-          {/* Shimmer loaders */}
+
           {loading &&
             Array.from({ length: PAGE_SIZE }).map((_, i) => (
               <div
@@ -97,7 +94,6 @@ const App = () => {
               </div>
             ))}
 
-          {/* Cards */}
           {!loading &&
             userData.map((elem, idx) => (
               <Card key={`${elem.id}-${idx}`} elem={elem} />
@@ -105,7 +101,6 @@ const App = () => {
         </div>
       </main>
 
-      {/* Pagination bar */}
       <footer className="fixed inset-x-0 bottom-0 z-40">
         <div className="max-w-6xl mx-auto">
           <div className="m-3 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl">
@@ -122,20 +117,16 @@ const App = () => {
                 Prev
               </button>
 
-              {/* Always show page 1 */}
               <PageDot current={index} n={1} onClick={() => goTo(1)} />
 
-              {/* Ellipsis if far from 1 */}
               {index > 4 && <Ellipsis />}
 
-              {/* Dynamic window around current */}
               {pageWindow
-                .filter((n) => n !== 1) // avoid duplicate 1
+                .filter((n) => n !== 1)
                 .map((n) => (
                   <PageDot key={n} current={index} n={n} onClick={() => goTo(n)} />
                 ))}
 
-              {/* “Infinite” forward hint */}
               <Ellipsis />
 
               <button
@@ -157,7 +148,6 @@ const App = () => {
   );
 };
 
-/* Small numbered square button */
 const PageDot = ({ n, current, onClick }) => {
   const isActive = n === current;
   return (
